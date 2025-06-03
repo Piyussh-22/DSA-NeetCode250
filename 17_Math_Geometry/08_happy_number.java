@@ -1,89 +1,108 @@
+// string style 1
 class Solution {
-    public int[] plusOne(int[] digits) {
-        int x = digits.length;
-        for(int i = x-1 ; i>=0 ; i--){
-            if(digits[i]<9){
-                digits[i]++;
-                return digits;
+    public boolean isHappy(int n) {
+        String test = Integer.toString(n);
+        int sum = 0;
+        HashSet<Integer> set = new HashSet<>();
+        while (sum != 1){
+            sum = 0;
+            for (int i = 0; i < test.length(); i++) {
+                int temp = test.charAt(i) - '0';
+                sum = sum + (temp * temp);
             }
-            digits[i]=0;
+            if(sum != 1){
+                if(!set.contains(sum)){
+                    set.add(sum);
+                    test = Integer.toString(sum);
+                }else{
+                    return false;
+                }
+            }else{
+                break;
+            }
         }
-        int[] newArray = new int[x+1];
-        newArray[0]=1;
-        return newArray;
+        return true;
     }
 }
-
-// method 2 also just for fun
-
-import java.math.BigInteger;
-
+// string style2
 class Solution {
-    public int[] plusOne(int[] digits) {
-        int l = digits.length;
-        if(digits[l-1] != 9){
-            digits[l-1] = digits[l-1] + 1 ;
-            return digits;
+    public boolean isHappy(int n) {
+        HashSet<Integer> seen = new HashSet<>();
+        String numStr = Integer.toString(n);
+        while (true){
+            int sum = 0;
+            for (int i = 0; i < numStr.length(); i++) {
+                int digit = numStr.charAt(i) - '0';
+                sum += (digit * digit);
+            }
+            if(sum==1){
+                return true;
+            }
+            if(seen.contains(sum)){
+                return false;
+            }
+            seen.add(sum);
+            numStr = Integer.toString(sum);
         }
-        StringBuilder sb = new StringBuilder();
-        for(int k : digits){
-            sb.append(k);
+    }
+}
+//% way
+class Solution {
+    public boolean isHappy(int n) {
+        HashSet<Integer> seen = new HashSet<>();
+        while (true){
+            int sum = 0;
+            while(n>0){
+                int x = n % 10;
+                sum += (x*x);
+                n /= 10;
+            }
+            if(sum==1){
+                return true;
+            }
+            if(seen.contains(sum)){
+                return false;
+            }
+            seen.add(sum);
+            n = sum;
         }
-
-        BigInteger bigNum = new BigInteger(sb.toString());
-        bigNum = bigNum.add(BigInteger.ONE);
-
-        String finalStr = bigNum.toString();
-
-        int[] ans = new int[finalStr.length()];
-        for(int i = 0 ; i < ans.length ; i++){
-            ans[i] = finalStr.charAt(i) - '0';
-        }
-        return ans;
     }
 }
 
 
-/*66. Plus One
+/*202. Happy Number
 Solved
 Easy
 Topics
 premium lock icon
 Companies
-You are given a large integer represented as an integer array digits,
-where each digits[i] is the ith digit of the integer.
-The digits are ordered from most significant to least significant in left-to-right order.
-The large integer does not contain any leading 0's.
+Write an algorithm to determine if a number n is happy.
 
-Increment the large integer by one and return the resulting array of digits.
+A happy number is a number defined by the following process:
+
+Starting with any positive integer, replace the number by the sum of the squares of its digits.
+Repeat the process until the number equals 1 (where it will stay), or it
+loops endlessly in a cycle which does not include 1.
+Those numbers for which this process ends in 1 are happy.
+Return true if n is a happy number, and false if not
 
 
 
 Example 1:
 
-Input: digits = [1,2,3]
-Output: [1,2,4]
-Explanation: The array represents the integer 123.
-Incrementing by one gives 123 + 1 = 124.
-Thus, the result should be [1,2,4].
+Input: n = 19
+Output: true
+Explanation:
+12 + 92 = 82
+82 + 22 = 68
+62 + 82 = 100
+12 + 02 + 02 = 1
 Example 2:
 
-Input: digits = [4,3,2,1]
-Output: [4,3,2,2]
-Explanation: The array represents the integer 4321.
-Incrementing by one gives 4321 + 1 = 4322.
-Thus, the result should be [4,3,2,2].
-Example 3:
-
-Input: digits = [9]
-Output: [1,0]
-Explanation: The array represents the integer 9.
-Incrementing by one gives 9 + 1 = 10.
-Thus, the result should be [1,0].
+Input: n = 2
+Output: false
 
 
 Constraints:
 
-1 <= digits.length <= 100
-0 <= digits[i] <= 9
-digits does not contain any leading 0's.*/
+1 <= n <= 231 - 1*/
