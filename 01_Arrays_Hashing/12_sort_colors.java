@@ -14,6 +14,36 @@ class Solution {
     }
 }
 
+//method 2 HashMap
+class Solution {
+    public void sortColors(int[] nums) {
+        Map<Integer,Integer> map = new HashMap<>();
+        map.put(0,0);
+        map.put(1,0);
+        map.put(2,0);
+        for(int i = 0 ; i < nums.length ; i++){
+            switch (nums[i]){
+                case 0:
+                    map.put(0,map.get(0)+1);
+                    break;
+                case 1:
+                    map.put(1,map.get(1)+1);
+                    break;
+                case 2:
+                    map.put(2,map.get(2)+1);
+                    break;
+            }
+        }
+        int start = 0 ;
+        for (int j = 0; j < map.size(); j++) {
+            for(int i = 0 ; i < map.get(j) ; i++){
+                nums[start] = j;
+                start++;
+            }
+        }
+    }
+}
+
 /*75. Sort Colors
 Solved
 Medium
