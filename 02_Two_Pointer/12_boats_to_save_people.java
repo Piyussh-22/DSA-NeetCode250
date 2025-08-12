@@ -17,7 +17,7 @@ class Solution {
         return noOfBoats;
     }
 }
-
+/*
 881. Boats to Save People
 Solved
         Medium
@@ -51,3 +51,5 @@ Constraints:
 
         1 <= people.length <= 5 * 104
         1 <= people[i] <= limit <= 3 * 104
+
+ */
